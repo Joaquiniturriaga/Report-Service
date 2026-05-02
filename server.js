@@ -6,6 +6,9 @@ const reportRoutes = require('./src/routes/report.routes');
 
 const { connectRabbit } = require('./src/config/rabbit');
 
+const { initDB } = require('./src/config/db.init');
+
+
 const app = express();
 app.use(express.json);
 
@@ -23,6 +26,7 @@ app.use((err, req , res, next)=>{
 
 //This is a function asincrona, waiting for response 
 const startServer = async() => {
+    await initDB(); 
     await connectRabbit();
     const PORT = process.env.PORT || 3002;
     app.listen(PORT ,()=>{
