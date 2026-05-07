@@ -10,7 +10,7 @@ const { initDB } = require('./src/config/db.init');
 
 
 const app = express();
-app.use(express.json);
+app.use(express.json());
 
 app.use('/api/reports', reportRoutes);
 
@@ -30,6 +30,7 @@ const startServer = async () => {
         await connectRabbit();
     } catch (error) {
         console.error('Error al iniciar:', error.message);
+        process.exit(1);
     }
 
     const PORT = process.env.PORT || 3002;
