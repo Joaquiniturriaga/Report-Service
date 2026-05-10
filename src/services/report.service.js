@@ -6,7 +6,8 @@ const createReport = async (data, user) => {
         title:       data.title,
         description: data.description,
         lat:         data.lat,
-        lng:         data.lng
+        lng:         data.lng,
+        tipo:        data.tipo || 'INCENDIO'
     };
 
     const savedReport = await reportModel.create(newReport);
