@@ -15,4 +15,12 @@ const findAll = async () => {
     return result.rows;
 };
 
-module.exports = { create, findAll };
+const updateStatus = async (id, status) => {
+    const result = await db.query(
+        `UPDATE reports SET status = $1 WHERE id = $2 RETURNING *`,
+        [status, id]
+    );
+    return result.rows[0] || null;
+};
+
+module.exports = { create, findAll, updateStatus };
