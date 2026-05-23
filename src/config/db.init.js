@@ -1,5 +1,5 @@
 const pool = require('./db');
-
+//
 const initDB = async () => {
     await pool.query(`
         CREATE TABLE IF NOT EXISTS reports (
