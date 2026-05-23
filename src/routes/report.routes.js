@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/',           validateToken,                         createReport);
 router.get('/',            validateToken,                         getReports);
-router.put('/:id/status',  validateToken, updateReportStatus);
- 
+router.put('/:id/status',       validateToken, updateReportStatus);  
+router.put('/internal/:id/status', updateReportStatus);             
+
 module.exports = router;
