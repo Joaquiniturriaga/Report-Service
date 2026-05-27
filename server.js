@@ -8,6 +8,10 @@ const { connectRabbit } = require('./src/config/rabbit');
 
 const { initDB } = require('./src/config/db.init');
 
+const {validateInternalSecret} = require('./src/middleware/internalSecret.middleware');
+
+const {validateReport} =  require('./src/middleware/validateReport.middleware');
+
 
 const app = express();
 
