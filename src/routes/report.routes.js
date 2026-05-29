@@ -6,10 +6,9 @@ const { validateReport }         = require('../middleware/validateReport.middlew
 
 const router = express.Router();
 
-router.put('/internal/:id/status', validateInternalSecret, updateReportStatus);
-
-router.post('/',          validateToken, validateReport,  createReport);
-router.get('/',           validateToken,                  getReports);
-router.put('/:id/status', validateToken,                  updateReportStatus);
+router.put('/internal/:id/status', validateInternalSecret, updateReportStatus)
+router.post('/',          validateToken, validateReport, createReport)
+router.get('/',           validateToken, getReports)
+router.put('/:id/status', validateToken, updateReportStatus)
 
 module.exports = router;

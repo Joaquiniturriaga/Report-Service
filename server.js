@@ -30,7 +30,7 @@ const reportLimiter = rateLimit({
     legacyHeaders: false,
 });
 
-app.use('/api/reports', validateInternalSecret, reportLimiter, reportRoutes);
+app.use('/api/reports', validateInternalSecret, reportRoutes)
 
 app.get('/', (req, res) => {
     res.json({ status: 'Report service running', version: '1.0.0' });

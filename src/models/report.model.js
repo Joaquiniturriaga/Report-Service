@@ -10,7 +10,7 @@ const create = async (report) => {
     return result.rows[0];
 };
 
-const findAll = async () => {
+const findAll = async () => {   
     const result = await db.query('SELECT * FROM reports ORDER BY created_at DESC');
     return result.rows;
 };
