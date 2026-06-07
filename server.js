@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express    = require('express');
 const helmet     = require('helmet');
-const rateLimit  = require('express-rate-limit');
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit')
 
 const reportRoutes               = require('./src/routes/report.routes');
 const { connectRabbit }          = require('./src/config/rabbit');
@@ -16,19 +16,14 @@ app.use(helmet());
 app.use(express.json());
 
 const reportLimiter = rateLimit({
-    windowMs: 2 * 60 * 1000,
-    max: 5,
-    keyGenerator: (req) => req.headers['x-user-id'] || req.ip,
-    handler: (req, res) => {
-        const userId = req.headers['x-user-id'] || req.ip;
-        console.warn(`[RATE LIMIT] user/ip bloqueado: ${userId} | ${new Date().toISOString()}`);
-        res.status(429).json({
-            error: 'Demasiados reportes. Máximo 5 en 2 minutos.',
-        });
-    },
-    standardHeaders: true,
-    legacyHeaders: false,
-});
+  windowMs: 2 * 60 * 1000,
+  max: 5,
+  keyGenerator: (req) => req.headers['x-user-id'] || ipKeyGenerator(req),  // ← fix
+  handler: (req, res) => {
+    console.warn(`[RateLimit] Bloqueado: ${req.headers['x-user-id'] || req.ip}`)
+    res.status(429).json({ error: 'Demasiados reportes. Máximo 5 en 2 minutos.' })
+  }
+})
 
 app.use('/api/reports', validateInternalSecret, reportRoutes)
 
