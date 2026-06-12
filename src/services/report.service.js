@@ -19,4 +19,9 @@ const getReports = async () => {
     return await reportModel.findAll();
 };
 
-module.exports = { createReport, getReports };
+const updateReportStatus = async (id, status) => {
+    return await reportModel.updateStatus(id, status);
+};
+
+
+module.exports = { createReport, getReports , updateReportStatus};

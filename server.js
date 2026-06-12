@@ -1,28 +1,9 @@
+// server.js
 require('dotenv').config();
 
-const express = require('express');
-
-const reportRoutes = require('./src/routes/report.routes');
-
-const { connectRabbit } = require('./src/config/rabbit');
-
-const { initDB } = require('./src/config/db.init');
-
-
-const app = express();
-app.use(express.json());
-
-app.use('/api/reports', reportRoutes);
-
-app.get('/', (req,res)=>{
-    res.send('Report service running my bold ╰(*°▽°*)╯');
-});
-
-
-app.use((err, req , res, next)=>{
-    console.log(err);
-    res.status(500).json({error: 'Internal server error'});
-});
+const app                = require('./app');
+const { connectRabbit }  = require('./src/config/rabbit');
+const { initDB }         = require('./src/config/db.init');
 
 const startServer = async () => {
     try {
@@ -40,4 +21,3 @@ const startServer = async () => {
 };
 
 startServer();
-

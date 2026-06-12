@@ -10,9 +10,17 @@ const create = async (report) => {
     return result.rows[0];
 };
 
-const findAll = async () => {
+const findAll = async () => {   
     const result = await db.query('SELECT * FROM reports ORDER BY created_at DESC');
     return result.rows;
 };
 
-module.exports = { create, findAll };
+const updateStatus = async (id, status) => {
+    const result = await db.query(
+        `UPDATE reports SET status = $1 WHERE id = $2 RETURNING *`,
+        [status, id]
+    );
+    return result.rows[0] || null;
+};
+
+module.exports = { create, findAll, updateStatus };
