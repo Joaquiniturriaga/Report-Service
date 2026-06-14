@@ -1,6 +1,9 @@
-// test/report.test.js
-process.env.INTERNAL_SECRET = 'test-secret-123';
+jest.mock('express-rate-limit', () => ({
+  rateLimit: jest.fn(() => (req, res, next) => next()),
+  ipKeyGenerator: jest.fn(),
+}));
 
+process.env.INTERNAL_SECRET = 'test-secret-123';
 const request = require('supertest');
 const app     = require('../app');
 
