@@ -1,0 +1,9 @@
+services:
+  report-test:
+    build:
+      context: .
+      target: test
+    environment:
+      NODE_ENV: test
+      INTERNAL_SECRET: test-secret-123
+      DATABASE_URL: postgresql://fake:fake@localhost:5432/fake
